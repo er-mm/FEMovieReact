@@ -8,7 +8,11 @@ export class Pagination extends React.Component {
         super();
         this.state = {
              currentPage: 1,
-          todosPerPage: 10
+          todosPerPage: 10,
+          start:0,
+          limit:5,
+          allDataArr:[],
+          toggle:true
         };
         this.handleClick = this.handleClick.bind(this);
       }
@@ -18,24 +22,62 @@ export class Pagination extends React.Component {
           currentPage: Number(event.target.id)
         });
       }
+      
+     
+      
+      handleClickNextPrev(event) {
+    	 
+          this.setState({
+            start: Number(event.target.id),
+            currentPage :  Number(event.target.id) + 1
+          });
+        }
 
+      sortData(field,allDataArrr){
+    	  var hello =  allDataArrr.sort(function(a, b) {
+    		  console.log('field value : ',a[field]);
+        	  var nameA = a[field].toUpperCase(); // ignore upper and lowercase
+        	  var nameB = b[field].toUpperCase(); // ignore upper and lowercase
+        	  if (nameA < nameB) {
+        	    return 1;
+        	  }
+        	  if (nameA > nameB) {
+        	    return -1;
+        	  }
+
+        	  // names must be equal
+        	  return 0;
+        	});
+    	  console.log('hello',hello);
+    	  this.setState({allDataArr : hello});
+    	  //return hello;
+    	  
+      }
+      
       render() {
     	  let allData = this.props.allData;
-    	  console.log('hheeelooooo',allData);
-    	  let allDataArr= [];
-        let { currentPage, todosPerPage } = this.state;
+    	  
+    	  let {allDataArr} = this.state;
+    	  //console.log('this.stateeeeeeeeeeeeeeeeeeeeeeeeeeee',this.state.start);
+    	  //let allDataArr= [];
+    	  if(allDataArr == ''){
+    		  allDataArr = Object.values(allData);
+    	  }else{
+    		  allDataArr = allDataArr;
+    	  }
+        let { currentPage, todosPerPage,start,limit } = this.state;
 
         // Logic for displaying current todos
         const indexOfLastTodo = currentPage * todosPerPage;
         const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
-        allDataArr = Object.values(allData);
+       // allDataArr = Object.values(allData);
         // Logic for displaying page numbers
         const pageNumbers = [];
         for (let i = 1; i <= Math.ceil(allDataArr.length / todosPerPage); i++) {
           pageNumbers.push(i);
         }
-
-        const renderPageNumbers = pageNumbers.map(number => {
+//console.log('*******************************************',start,pageNumbers);
+        const renderPageNumbers = pageNumbers.slice(start,start+limit).map(number => {
           return (
             <li
 			className="btn btn-link"
@@ -47,14 +89,32 @@ export class Pagination extends React.Component {
             </li>
           );
         });
+        
+       // var arr = [1,2,3,4,5,6,7,8]; 
+      /*  var start = 0;
+        var end = 8;
 
+        var renderPageNumbers = pageNumbers.slice(start,start+2).map(number => {return(<li>{number}</li>);});
+*/
         return (
         		<div className="container">
-          <Content allDataArr={allDataArr} indexOfLastTodo={indexOfLastTodo} indexOfFirstTodo={indexOfFirstTodo}/>
+          <Content allDataArr={allDataArr} indexOfLastTodo={indexOfLastTodo} indexOfFirstTodo={indexOfFirstTodo} sortData={this.sortData.bind(this)}/>
 		  <nav aria-label="Pagination">
             
             <ul id="pagee" className="pagination justify-content-center">
+            {start<=0 ? '' : 
+            <li className="btn btn-link"
+                  id={start-limit}
+                  onClick={this.handleClickNextPrev.bind(this)}
+                >Prev</li>
+            }
               {renderPageNumbers}
+              {start>=pageNumbers.length - limit ? '' : 
+              <li className="btn btn-link"
+                      id={start+limit}
+                      onClick={this.handleClickNextPrev.bind(this)}
+                    >Next</li>
+              }
             </ul>
 			</nav>
           </div>

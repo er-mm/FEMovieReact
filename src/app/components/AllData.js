@@ -24,7 +24,7 @@ export class AllData extends React.Component{
     	fetch('http://starlord.hackerearth.com/movies')
   	  .then(data => data.json())
   	  .then(function(data) {
-  		  console.log('888888888888888888',data);
+  		//  console.log('888888888888888888',data);
   	    //console.log('55555555555555',JSON.stringify(myJson));
   	    this.setState({ allData: data});
   	  }.bind(this));
@@ -55,16 +55,13 @@ export class AllData extends React.Component{
    
     render(){
     	let {allData, isLoading} = this.state;
-    	console.log('ggggggggggggggggggggggg',allData);
+    	//console.log('ggggggggggggggggggggggg',allData);
         return(
               
                <div className="container">
-               {isLoading ?
-               
-               <div>Loading...</div>
-               :
+              
             	   <Pagination allData={allData}/>  
-               }
+              
                </div> 
         );
     }
