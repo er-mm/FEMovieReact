@@ -29,19 +29,6 @@ export class Pagination extends React.Component {
         const indexOfLastTodo = currentPage * todosPerPage;
         const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
         allDataArr = Object.values(allData);
-        //const currentTodos = allDataArr.slice(indexOfFirstTodo, indexOfLastTodo);
-
-       /* const renderTodos = currentTodos.map((data, index) => {
-          return (
-                  <tr key={index} id={data.id}>
-                      
-                      <td><input type="text" id={data.uname} defaultValue={data.name}  readOnly={true}/></td>
-                      <td><input type="text" id={data.password} defaultValue={data.lname} readOnly={true}/></td>
-                      <td><input type="text" id={data.gender} defaultValue={data.email} readOnly={true}/></td>
-                       </tr>
-              );
-        });
-*/
         // Logic for displaying page numbers
         const pageNumbers = [];
         for (let i = 1; i <= Math.ceil(allDataArr.length / todosPerPage); i++) {
@@ -66,7 +53,7 @@ export class Pagination extends React.Component {
           <Content allDataArr={allDataArr} indexOfLastTodo={indexOfLastTodo} indexOfFirstTodo={indexOfFirstTodo}/>
 		  <nav aria-label="Pagination">
             
-            <ul className="pagination justify-content-center">
+            <ul id="pagee" className="pagination justify-content-center">
               {renderPageNumbers}
             </ul>
 			</nav>

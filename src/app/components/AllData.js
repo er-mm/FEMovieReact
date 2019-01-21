@@ -27,7 +27,7 @@ export class AllData extends React.Component{
   		  console.log('888888888888888888',data);
   	    //console.log('55555555555555',JSON.stringify(myJson));
   	    this.setState({ allData: data});
-  	  });
+  	  }.bind(this));
     	/*fetch('http://starlord.hackerearth.com/movies', {
     	method: 'GET',
     	mode: 'no-cors',
