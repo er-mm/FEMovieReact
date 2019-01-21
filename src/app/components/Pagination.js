@@ -12,7 +12,13 @@ export class Pagination extends React.Component {
           start:0,
           limit:5,
           allDataArr:[],
-          toggle:true
+          fields : {
+        	  'genres' : 'asc',
+        	  'language' : 'asc',
+        	  'country' : 'asc',
+        	  'budget' : 'asc',
+        	  'title_year' : 'asc'
+          }
         };
         this.handleClick = this.handleClick.bind(this);
       }
@@ -34,22 +40,52 @@ export class Pagination extends React.Component {
         }
 
       sortData(field,allDataArrr){
-    	  var hello =  allDataArrr.sort(function(a, b) {
-    		  console.log('field value : ',a[field]);
-        	  var nameA = a[field].toUpperCase(); // ignore upper and lowercase
-        	  var nameB = b[field].toUpperCase(); // ignore upper and lowercase
-        	  if (nameA < nameB) {
-        	    return 1;
-        	  }
-        	  if (nameA > nameB) {
-        	    return -1;
-        	  }
+    	  var sortedData = [];
+    	  console.log('this.state.fields.field',this.state.fields[field],field);
+    	  if(this.state.fields[field] == 'asc'){
+    		  let fields = {...this.state.fields};
+    		  fields[field] = 'dec';                        //updating value
+    		  this.setState({fields});
+    		  console.log('in if this.state.fields :::::::',this.state.fields);
+    		//this.setState({fields.field : 'dec'});
+    		  sortedData =  allDataArrr.sort(function(a, b) {
+       		  //console.log('field value : ',a[field]);
+           	  var nameA = a[field].toUpperCase(); // ignore upper and lowercase
+           	  var nameB = b[field].toUpperCase(); // ignore upper and lowercase
+           	  if (nameA < nameB) {
+           	    return -1;
+           	  }
+           	  if (nameA > nameB) {
+           	    return 1;
+           	  }
 
-        	  // names must be equal
-        	  return 0;
-        	});
-    	  console.log('hello',hello);
-    	  this.setState({allDataArr : hello});
+           	  // names must be equal
+           	  return 0;
+           	});
+    	  }else{
+    		  let fields = {...this.state.fields};
+    		  fields[field] = 'asc';                        //updating value
+    		  this.setState({fields});
+    		  console.log('in else this.state.fields :::::::',this.state.fields);
+    		 // this.setState({fields.field : 'asc'});
+    		   sortedData =  allDataArrr.sort(function(a, b) {
+        		  //console.log('fieldcxvdsvsv value : ',a[field]);
+            	  var nameA = a[field].toUpperCase(); // ignore upper and lowercase
+            	  var nameB = b[field].toUpperCase(); // ignore upper and lowercase
+            	  if (nameA < nameB) {
+            	    return 1;
+            	  }
+            	  if (nameA > nameB) {
+            	    return -1;
+            	  }
+
+            	  // names must be equal
+            	  return 0;
+            	});
+    	  }
+    	 
+    	  //console.log('sortedData',sortedData);
+    	  this.setState({allDataArr : sortedData});
     	  //return hello;
     	  
       }
