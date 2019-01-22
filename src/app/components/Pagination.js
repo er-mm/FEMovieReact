@@ -11,6 +11,7 @@ export class Pagination extends React.Component {
           todosPerPage: 10,
           start:0,
           limit:5,
+          error:'',
           allDataArr:[],
           fields : {
         	  'genres' : 'asc',
@@ -39,18 +40,28 @@ export class Pagination extends React.Component {
           });
         }
       filterData(e,title,allDataArra){
+    	  var allDataArra = Object.values(allDataArra);
     	  var title = title.toLowerCase();
     	  var filteredData = [];
+    	  if(title != 'select'){
     	  filteredData = allDataArra.filter((data)=>{
     		  console.log('title',title);
-    		  console.log('dta',data);
+    		  //console.log('dta',data);
     		  console.log('dta.titleeeeeeeee',data[title]);
     		  console.log('e.target.value',e.target.value);
     		 if(data[title].includes(e.target.value)){
+    			 console.log('data[title].includes(e.target.value) : ',data[title].includes(e.target.value));
     			 return data;
     		 } 
     	  });
-    	  this.setState({allDataArr : filteredData});
+    	  }else{
+    		  this.setState({allDataArr : filteredData, error:'Please select a value from DropDown'});
+    	  }
+    	  if(filteredData == ''){
+    		  this.setState({allDataArr : filteredData, error:'No Filtered Data Found : Showing All Data'});
+    	  }else{
+    	  this.setState({allDataArr : filteredData,error:''});
+    	  }
       }
       sortData(field,allDataArrr){
     	  var sortedData = [];
@@ -114,7 +125,7 @@ export class Pagination extends React.Component {
     	  }else{
     		  allDataArr = allDataArr;
     	  }
-        let { currentPage, todosPerPage,start,limit } = this.state;
+        let { currentPage, todosPerPage,start,limit,error } = this.state;
 
         // Logic for displaying current todos
         const indexOfLastTodo = currentPage * todosPerPage;
@@ -147,7 +158,7 @@ export class Pagination extends React.Component {
 */
         return (
         		<div className="container">
-          <Content allDataArr={allDataArr} indexOfLastTodo={indexOfLastTodo} indexOfFirstTodo={indexOfFirstTodo} sortData={this.sortData.bind(this)} filterData={this.filterData.bind(this)}/>
+          <Content allData={allData} error={error} allDataArr={allDataArr} indexOfLastTodo={indexOfLastTodo} indexOfFirstTodo={indexOfFirstTodo} sortData={this.sortData.bind(this)} filterData={this.filterData.bind(this)}/>
 		  <nav aria-label="Pagination">
             
             <ul id="pagee" className="pagination justify-content-center">

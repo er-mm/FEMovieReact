@@ -20,6 +20,8 @@ export class Filter extends React.Component{
 		let allDataArr = props.allDataArr;
 		let filterData = props.filterData;
 		let {title} = this.state;
+		let error='';
+		error = props.error;
 		return(
 			<div className='container'>
 			<form className="table p-3 mb-2 bg-light text-dark">
@@ -38,6 +40,7 @@ export class Filter extends React.Component{
 			    </div>
 			</div>
 			<input type="text" className="form-control" onChange={(event)=>filterData(event,title,allDataArr)} id={title} autoFocus placeholder={'Search for '+title} required/>
+			<span style={{color: "red"}}>{error}</span>
 			</div>
 			</form>
 			</div>

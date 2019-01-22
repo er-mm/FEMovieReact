@@ -15,9 +15,10 @@ export class Content extends React.Component {
       
       render() {
 		  let props = this.props;
-		  
+		  let error = props.error;
 		  let sortData = props.sortData;
 		  let filterData = props.filterData;
+		  let allData = props.allData;
 		 // console.log('sortData:::::::::::::',sortData);
 		  let indexOfFirstTodo = props.indexOfFirstTodo;
 		  let indexOfLastTodo = props.indexOfLastTodo;
@@ -43,7 +44,7 @@ export class Content extends React.Component {
 
         return (
         		  <div className="container">
-        		  <Filter allDataArr={allDataArr} filterData={filterData}/>
+        		  <Filter allDataArr={allData} filterData={filterData} error={error}/>
 		   <table className="table p-3 mb-2 table-striped">
             <thead>
                 <tr>
