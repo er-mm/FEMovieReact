@@ -1,6 +1,7 @@
 import React from "react";
 import fetch from 'isomorphic-fetch';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {Filter} from './Filter';
 
 export class Content extends React.Component {
       constructor() {
@@ -12,36 +13,11 @@ export class Content extends React.Component {
         }
       }
       
-    /* handleSort(field, e){         
-         /* let {fields,toggle} = this.state;
-          fields[field] = e.target.value;        
-          this.setState({fields});
-          
-          this.dataSort(fields,field);
-          
-      }*/
-     /* dataSort(fields,field){
-    	  allDataArray.sort(function(a, b) {
-        	  var nameA = a.fields[field].toUpperCase(); // ignore upper and lowercase
-        	  var nameB = b.fields[field].toUpperCase(); // ignore upper and lowercase
-        	  if (nameA < nameB) {
-        	    return -1;
-        	  }
-        	  if (nameA > nameB) {
-        	    return 1;
-        	  }
-
-        	  // names must be equal
-        	  return 0;
-        	});
-          
-          this.setState({allDataArray : allDataArray});
-      }*/
-
       render() {
 		  let props = this.props;
-		  let { allDataArray } = this.state;
-		  let sortData = this.props.sortData;
+		  
+		  let sortData = props.sortData;
+		  let filterData = props.filterData;
 		 // console.log('sortData:::::::::::::',sortData);
 		  let indexOfFirstTodo = props.indexOfFirstTodo;
 		  let indexOfLastTodo = props.indexOfLastTodo;
@@ -67,6 +43,7 @@ export class Content extends React.Component {
 
         return (
         		  <div className="container">
+        		  <Filter allDataArr={allDataArr} filterData={filterData}/>
 		   <table className="table p-3 mb-2 table-striped">
             <thead>
                 <tr>
